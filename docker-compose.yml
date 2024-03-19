@@ -2,33 +2,32 @@ version: "3.8"
 
 services:
 
-    planka:
+    sails_app:
         restart: on-failure
         depends_on:
-            - mongo_database
+            - mongo_docker
         build: ./server
         env_file: ./.env
         ports:
             - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
         environment:
-            - DB_HOST=mongo_database
+            - DB_HOST=mongo_docker
             - DB_NAME=$MONGODB_NAME
             - DB_PORT=$MONGODB_DOCKER_PORT
             - DB_USER=$MONGODB_USER
-            - DB_PASSWORD=$MONGODB_PASSWORD
-            - PORT=$NODE_DOCKER_PORT
+            - DB_PASS=$MONGODB_PASS
             - ENV=$NODE_ENV
             - BASE_URL=$BASE_URL
         stdin_open: true
         tty: true
 
-    mongo_database:
+    mongo_docker:
         image: mongo:5.0.2
         restart: on-failure
         env_file: ./.env
         environment:
             - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
-            - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
+            - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASS
         ports:
             - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
         volumes:
