@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+
+    planka:
+        restart: on-failure
+        depends_on:
+            - mongo_database
+        build: ./server
+        env_file: ./.env
+        ports:
+            - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+        environment:
+            - DB_HOST=mongo_database
+            - DB_NAME=$MONGODB_NAME
+            - DB_PORT=$MONGODB_DOCKER_PORT
+            - DB_USER=$MONGODB_USER
+            - DB_PASSWORD=$MONGODB_PASSWORD
+            - PORT=$NODE_DOCKER_PORT
+            - ENV=$NODE_ENV
+            - BASE_URL=$BASE_URL
+        stdin_open: true
+        tty: true
+
+    mongo_database:
+        image: mongo:5.0.2
+        restart: on-failure
+        env_file: ./.env
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
+            - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
+        ports:
+            - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
+        volumes:
+            - db_test:/data/db
+
+volumes:
+    db_test:
