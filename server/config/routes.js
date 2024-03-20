@@ -14,6 +14,10 @@ module.exports.routes = {
     'GET /api/tutorial': 'tutorial/index',
     'GET /api/tutorial/:id': 'tutorial/show',
     'POST /api/tutorial': 'tutorial/create',
-    'DELETE /api/tutorial/:id': 'tutorial/delete'
-    
+    'DELETE /api/tutorial/:id': 'tutorial/delete',
+
+    'GET /*': {
+        view: 'index',
+        skipAssets: true,
+    },
 }

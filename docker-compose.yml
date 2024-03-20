@@ -3,11 +3,17 @@ version: "3.8"
 services:
 
     sails_app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        env_file: ./.env
         restart: on-failure
         depends_on:
             - mongo_docker
-        build: ./server
-        env_file: ./.env
+        volumes:
+            - user-avatars:/app/public/user-avatars
+            - project-background-images:/app/public/project-background-images
+            - attachments:/app/private/attachments
         ports:
             - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
         environment:
@@ -34,4 +40,7 @@ services:
             - db_test:/data/db
 
 volumes:
+    user-avatars:
+    project-background-images:
+    attachments:
     db_test:
