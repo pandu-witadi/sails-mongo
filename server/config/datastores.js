@@ -49,8 +49,7 @@ module.exports.datastores = {
         *                                                                          *
         ***************************************************************************/
         adapter: require('sails-mongo'),
-        // url: 'mongodb://root:123456@mongo_docker:27017/nodetest?authSource=admin',
-        url: `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}?authSource=admin`
+        url: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
     },
 
 
